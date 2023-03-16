@@ -5,7 +5,7 @@ ruby '3.0.1'
 
 # Core
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'rails', '6.0.3'
+gem 'rails', '6.1.7.3'
 
 # Middleware
 gem 'pg', '>= 0.18', '< 2.0'
