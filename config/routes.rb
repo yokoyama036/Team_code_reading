@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'statics#top'
   get :dashboard, to: 'teams#dashboard'
+  # get :change_owner, to: 'teams#change_owner'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -15,6 +16,9 @@ Rails.application.routes.draw do
       resources :articles do
         resources :comments
       end
+    end
+    member do
+      post :change_owner
     end
   end
 
