@@ -47,17 +47,18 @@ class TeamsController < ApplicationController
   def dashboard
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
-  
+
   def change_owner
-    if current_user == @team.owner
-        @team.update(owner_id: params[:owner_id])
-        @user = User.find(@team.owner_id)
-        AssignMailer.owner_mail(@user.email, @team.name).deliver
-        redirect_to @team, notice: I18n.t('views.messages.update_team')
-    end
+    return unless current_user == @team.owner
+
+    @team.update(owner_id: params[:owner_id])
+    @user = User.find(@team.owner_id)
+    AssignMailer.owner_mail(@user.email, @team.name).deliver
+    redirect_to @team, notice: I18n.t('views.messages.update_team')
   end
 
   private
+
   def set_team
     @team = Team.friendly.find(params[:id])
   end
@@ -65,7 +66,7 @@ class TeamsController < ApplicationController
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
   end
-# 追加
+  # 追加
   # def require_owner
   #   unless current_user == @team.owner
   #     redirect_to @team, notice: 'You are not authorized to perform this action.'
